@@ -1,19 +1,11 @@
 from django.db import models
 
 from PIL import Image
-User = ''
+
+from ..auth.models import Profile as User
+
 
 # Create your models here.
-class Math2codeCommentReplies(models.Model):
-    user = models.ForeignKey(User,models.CASCADE)
-    # comment = models.ForeignKey(Math2codeComments,models.CASCADE)
-
-    # reply_to_comment = models.BooleanField
-    # reply_to = models.AutoField()
-    reply = models.CharField(max_length=500,blank=False)
-
-    date_added = models.DateTimeField(auto_now_add=True)
-
 
 class Math2codeComments(models.Model):
     user = models.ForeignKey(User,models.CASCADE)
@@ -21,11 +13,29 @@ class Math2codeComments(models.Model):
 
     # reply_to_comment = models.BooleanField(default=False)
     reply_to = models.CharField(max_length=100000000)
-    replies = models.ForeignKey(Math2codeCommentReplies,models.CASCADE)
+    # replies = models.ForeignKey(Math2codeCommentReplies,models.CASCADE)
 
     comment = models.CharField(max_length=1000, blank=False)
 
     date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.comment
+
+
+class Math2codeCommentReplies(models.Model):
+    user = models.ForeignKey(User,models.CASCADE)
+    comment = models.ForeignKey(Math2codeComments,models.CASCADE)
+
+    # reply_to_comment = models.BooleanField
+    # reply_to = models.CharField(max_length=100000)
+    reply = models.CharField(max_length=500,blank=False)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reply
+
 
 
 class Math2codeContent(models.Model):
@@ -47,10 +57,14 @@ class Math2codeContent(models.Model):
     comments = models.ForeignKey(Math2codeComments,models.CASCADE)
     url = models.URLField(max_length=100)
     date_added = models.DateTimeField(auto_now_add=True)
+    when_publish = models.DateTimeField()
+
+    def __str__(self):
+        return self.title
 
 
-class Math2codeArticle(models.Model):
-    # here is the actual article object to reference
-    article = models.ForeignKey(Math2codeContent,models.CASCADE)
-    comments = models.ForeignKey(Math2codeComments,models.CASCADE)
+# class Math2codeArticle(models.Model):
+#     # here is the actual article object to reference
+#     article = models.ForeignKey(Math2codeContent,models.CASCADE)
+#     comments = models.ForeignKey(Math2codeComments,models.CASCADE)
 

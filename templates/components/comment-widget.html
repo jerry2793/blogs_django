@@ -2,6 +2,8 @@
 <!-- can dynamically adjust itself with different -->
 <!-- width and heights (reply or comment) -->
 <!-- Vars: "comment" - the comment object from model class -->
+<!-- "form": form of comment or reply along with the pk of the article  -->
+<!-- or comment instance -->
 
 <style>
     /* stylings directly here */
@@ -21,6 +23,30 @@
     <img src="{{comment.user.profile_pic}}" alt="">
     <h5>{{comment.user.first_name}} {{comment.user.last_name}}</h5>
     <p>{{comment.comment}}</p>
+    <!-- check if there are replies to the comment-towards-article -->
+    {% if comment.replies %}
+
+        {% for reply in comment.replies %}
+        <div class="article-comment-replies">
+            
+        </div>
+
+        <div class="comment-reply-form" id="reply-reply">
+        {% include 'components/reply-form.html' with 
+        pk={{comment.id}}
+        form={{form}} %}
+        </div>
+
+        {% endfor %}
+    
+    {% else %}
+
+        <div class="comment-reply-form" id="first-reply">
+
+        </div>
+
+    {% endif %}
+    
 </div>
 
 <script>

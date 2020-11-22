@@ -7,12 +7,37 @@
 <style>
     /* css code, write directly here (only html5 browsers can
     parse like this*/
+    .author-widget, .author-widget:hover {
+        padding: 5%;
+        background-color: whitesmoke;
+
+        fill-opacity: 0.7;
+        transition: 0.3 ease-in-out;
+    } .author-widget:hover {
+        fill-opacity: 1;
+    }
+    .author-widget img, .author-widget img:hover {
+        border-radius: 50%;
+        position: relative;
+        top: 50%;
+        left:2%;
+        width: 25%;
+        transition: 0.3s ease-in-out;
+    } .author-widget img:hover {
+        border-radius: 10%;
+    }
+    .author-widget h3 {
+        font-family: ubuntu,sans-serif;
+        left:35%;
+        font-size: large;
+        font-weight: bold;
+    }
 </style>
 
-<a href="{% url 'author-page' pk={{author.email}} %}">
+<a href="{% url 'author-page' pk={{author.id}} %}">
     <div class="author-widget">
         <img src="{{author.profile_pic}}" alt="">
-        <h3>{{author.name}}</h3>
+        <h3>{{author.first_name}} {{author.last_name}}</h3>
         {% if author.email %}
         <h5>{{author.email}}</h5>
         {% else %}

@@ -3,6 +3,8 @@
 {% block csslink %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/default.min.css">
 {% endblock %}
 
 {% block content %}
@@ -38,21 +40,8 @@ article: the article instance object w/ all the
 
 <div class="article-comments">
     {% for comment in comments %}
-
-
     <!-- main comment towards the article -->
     {% include 'components/comment-widget.html' with comment={{comment}} %}
-
-    <!-- check if there are replies to the comment-towards-article -->
-    {% if comment.replies %}
-
-    {% for reply in comment.replies %}
-    {% include 'components/comment-widget' with comment={{reply}}%}
-    {% endfor %}
-
-    {% endif %}
-
-
     {% endfor %}
 </div>
 
@@ -61,5 +50,6 @@ article: the article instance object w/ all the
 
 
 {% block jslink %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
 <script src="{% static 'js/code-formater-{{article.code_type}}.js' %}"></script>
 {% endblock %}

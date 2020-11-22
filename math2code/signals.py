@@ -10,6 +10,7 @@ from .models import (
 from django.conf import settings
 
 import os
+from datetime import DateTime
 
 BASE_URL = f'{settings.HOST_NAME}/math2code/articles/'
 
@@ -38,7 +39,8 @@ def ReplyNotification(sender,**kwargs):
     )
 
 # @receiver(post_save,sender=Math2codeContent)
-def Math2codeContent_PostSave(sender,**kwargs):
+def Math2codeContent_Email_Confirmation(sender,**kwargs):
+    # if DateTime.now() >= sender.when_publish:
     send_mail(
         'Math TO Code Content Added!',
         f"""

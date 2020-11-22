@@ -1,0 +1,10 @@
+<!-- vars: "form": form with one input field -->
+
+<style>
+    /* css */
+</style>
+
+<form action="{% url %}">
+    {{form.as_p}}
+    <input type="submit" value="submit" name="{{pk}}">
+</form>

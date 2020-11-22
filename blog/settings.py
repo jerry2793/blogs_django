@@ -30,7 +30,7 @@ SECRET_KEY = '9)kz_xo17wi_7q%py4-*qs#gppwlqs2+*9+@&zjufz&83+tra6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 try: 
     HOST_NAME = socket.gethostname()
@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'math2code'
+    'auth',
+    'math2code',
+    'blogs',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +70,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR,'templates'),
+            os.path.join(BASE_DIR,'auth','templates'),
             os.path.join(BASE_DIR,'math2code','templates'),
+            os.path.join(BASE_DIR,'blogs','templates'),
             # os.path.join(BASE_DIR,'templates'),
         ],
         'APP_DIRS': True,
@@ -115,6 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = '/accounts/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -137,11 +142,13 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR,'auth','static'),
     os.path.join(BASE_DIR,'math2code','static'),
+    os.path.join(BASE_DIR,'blogs','static'),
     # os.path.join(BASE_DIR,'static'),
 ]
 
-STATIC_ROOT = 'staticfiles/'
+STATIC_ROOT = '/staticfiles/'
 
 
 MEDIA_URL = '/media/'
