@@ -2,11 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from django.views import View
-from django.views.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 from .models import Math2codeContent,Math2codeComments
-from .forms import Math2codeCommentsForm,Math2codeCommentRepliesForm
-
+from .forms import (
+    Math2codeContentForm,
+    Math2codeCommentsForm,
+    Math2codeCommentRepliesForm
+    )
+ArticleCreateForm = Math2codeContentForm
 Articles = Math2codeContent
 Comments = Math2codeComments
 
@@ -24,7 +28,7 @@ class IndexView(View):
 
 
 class ArticlesView(View):
-    def __init__(self,*args,**kwargs):
+    def my_init(self,*args,**kwargs):
         self.templates = {
             'article':'math2code/article.html'
         }
@@ -49,7 +53,7 @@ class ArticlesView(View):
         return render(self.request,self.templates['article'],self.ctx)
 
 
-    @login_required
+    @login_required()
     def post(self,*args,**kwargs):
         if self.submitted_form.is_valid():
             self.submitted_form.save()
@@ -63,3 +67,31 @@ class ArticlesView(View):
         else:
             self.ReplyForm['comment'] = POST['submit']
             return self.ReplyForm
+
+
+
+class ArticleCreateView(View):
+    def __init__(self):
+        self.template = {
+            'write-article':'math2code/write-article.html',
+            'success':'math2code/new-article_success.html'
+        }
+
+        self.request.POST['author'] = self.request.user
+
+        self.ctx = {
+            'create-form':ArticleCreateForm(self.request.POST)
+        }
+        self.new_article = self.ctx['create-form']
+
+
+    def get(self,*args,**kwargs):
+        return render(self.request,self.template['write-article'], self.ctx)
+
+    
+    def post(self,**kwargs):
+        if self.new_article.is_valid:
+            self.new_article.save()
+            return render(self.request,self.template['success'], self.ctx)
+        else:
+            return render(self.request,self.template['write-article'], self.ctx)

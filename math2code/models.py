@@ -2,7 +2,9 @@ from django.db import models
 
 from PIL import Image
 
-from ..auth.models import Profile as User
+from profile.models import Profile as User
+
+from datetime import datetime
 
 
 # Create your models here.
@@ -12,7 +14,7 @@ class Math2codeComments(models.Model):
     # article = models.ForeignKey(Math2codeContent,models.CASCADE)
 
     # reply_to_comment = models.BooleanField(default=False)
-    reply_to = models.CharField(max_length=100000000)
+    reply_to = models.CharField(max_length=1000)
     # replies = models.ForeignKey(Math2codeCommentReplies,models.CASCADE)
 
     comment = models.CharField(max_length=1000, blank=False)
@@ -42,7 +44,7 @@ class Math2codeContent(models.Model):
     title = models.CharField(max_length=100,blank=False)
     header_image = models.ImageField(upload_to="math2code/images/")
     description = models.CharField(max_length=250,blank=True)
-    author = models.ForeignKey(User,models.CASCADE)
+    author = models.ForeignKey(User,models.CASCADE,default=None,blank=True)
 
     problem = models.TextField(blank=False)
     explaination_problem = models.TextField(blank=False)
@@ -54,10 +56,10 @@ class Math2codeContent(models.Model):
     ), default='1')
     explaination_code = models.TextField(blank=False)
 
-    comments = models.ForeignKey(Math2codeComments,models.CASCADE)
-    url = models.URLField(max_length=100)
+    # comments = models.ForeignKey(Math2codeComments,models.CASCADE)
+    url = models.URLField(default=None,max_length=100,blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
-    when_publish = models.DateTimeField()
+    when_publish = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return self.title
