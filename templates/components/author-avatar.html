@@ -1,0 +1,28 @@
+<!-- given the author object, create the avatar -->
+<!-- that can dynamically adjust itself w/ different -->
+<!-- div sizes of different css, make the js that -->
+<!-- allows you to hide information if exceeds the height -->
+<!-- note: use percentages in css -->
+
+<style>
+    /* css code, write directly here (only html5 browsers can
+    parse like this*/
+</style>
+
+<a href="{% url 'author-page' pk={{author.email}} %}">
+    <div class="author-widget">
+        <img src="{{author.profile_pic}}" alt="">
+        <h3>{{author.name}}</h3>
+        {% if author.email %}
+        <h5>{{author.email}}</h5>
+        {% else %}
+        <!-- placeholder -->
+        {% endif %}
+        <p>{{author.signiture}}</p>
+        <strong>Show More</strong>
+    </div>
+</a>
+
+<script>
+    // write js of dynamic adjusting here, all browser support
+</script>

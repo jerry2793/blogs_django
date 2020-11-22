@@ -1,0 +1,13 @@
+.blog-section, .blog-section:hover {
+    width: max-content;
+    fill-opacity: 0.7;
+    
+    transition: 0.3s ease-in-out;
+} .blog-section:hover{
+    fill-opacity: 1;
+}
+
+.article-widget-index, .article-widget-index:hover {
+    width: 100%;
+    background-color: #dedede;
+}

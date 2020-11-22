@@ -1,0 +1,28 @@
+<!-- returns the comment screen with all func -->
+<!-- can dynamically adjust itself with different -->
+<!-- width and heights (reply or comment) -->
+<!-- Vars: "comment" - the comment object from model class -->
+
+<style>
+    /* stylings directly here */
+    .article-comment-widget, .article-comment-widget:hover {
+        position: relative;
+        width: 100%;
+        background-color: blanchedalmond;
+
+        transition: 0.3s ease-out;
+    } .article-comment-widget:hover {
+        cursor: pointer;
+        filter: brightness(0.7);
+    }
+</style>
+
+<div class="article-comment-widget">
+    <img src="{{comment.user.profile_pic}}" alt="">
+    <h5>{{comment.user.first_name}} {{comment.user.last_name}}</h5>
+    <p>{{comment.comment}}</p>
+</div>
+
+<script>
+    // js here
+</script>

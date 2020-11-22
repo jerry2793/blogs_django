@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block csslink %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- vars:
+article: the article instance object w/ all the 
+-->
+
+<div class="article-header">
+    <h1>{{article.title}}</h1>
+    <div class="article-header-small-info">
+        <p>Posted {{article.date_added}}</p>
+    </div>
+    <p>{{article.description}}</p>
+    <img src="{{article.header_image}}" alt="">
+</div>
+
+<div class="article-content">
+    <div class="article-math">
+        <p>{{article.problem}}</p>
+        <p>{{article.explaination_problem}}</p>
+    </div>
+    <div class="article-code">
+
+    </div>
+</div>
+
+<div class="article-footer">
+    <div class="article-author">
+        {% inlcude 'components/author-avatar.html' with author={{article.author}}%}
+    </div>
+</div>
+
+<div class="article-comments">
+    {% for comment in comments %}
+
+
+    <!-- main comment towards the article -->
+    {% include 'components/comment-widget.html' with comment={{comment}} %}
+
+    <!-- check if there are replies to the comment-towards-article -->
+    {% if comment.replies %}
+
+    {% for reply in comment.replies %}
+    {% include 'components/comment-widget' with comment={{reply}}%}
+    {% endfor %}
+
+    {% endif %}
+
+
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+
+
+{% block jslink %}
+<script src="{% static 'js/code-formater-{{article.code_type}}.js' %}"></script>
+{% endblock %}

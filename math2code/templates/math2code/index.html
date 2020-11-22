@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block csslink %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="blog-header">
+    <h1>Welcome to my Blogs Page!</h1>
+</div>
+
+<!-- pulls out a list of current articles -->
+<div class="blog-section" id="math2code-section">
+
+{% for post in posts %}
+<a href="{% url 'math2code-articles' pk=post.id %}">
+<div class="article-widget-index">
+    {% if post.header_image %}
+    <img src="{{post.header_image}}">
+    <!-- <p>{{post.header_image}}</p> -->
+    {% else %}
+    <img src="/media/images/default-article.jpg" alt="">
+    {% endif %}
+    <h2>{{post.title}}</h2>
+    <p>{{post.description}}</p>
+</div>
+</a>
+
+
+<!-- when hover, show the author of the article -->
+<!-- and links to the page introducing the author -->
+{% inlcude 'components/author-avatar.html' 
+with author={{post.author}}%}
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
+
+
+{% block jslink %}
+<script src="{% static 'js/blog-index.js' %}"></script>
+{% endblock %}

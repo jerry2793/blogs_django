@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=500px, initial-scale=1.0"> -->
+    <title>Blogs</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block csslink %}{% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+
+    {% block jslink %}{% endblock %}
+</body>
+</html>

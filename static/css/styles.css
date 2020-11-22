@@ -1,0 +1,11 @@
+body {
+    width: 100%;
+    background-color: azure;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+} a:hover {
+    cursor: pointer;
+}
