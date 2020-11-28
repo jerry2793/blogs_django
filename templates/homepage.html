@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<p>Welcome to the Homepage! {{request.user}}! </p>
+{% if request.user.profile %}
+<a href="{% url 'update_profile' pk=request.user.id %}">Update My Profile</a>
+{% else %}
+<a href="{% url 'create_profile' %}">Create Profile</a>
+{% endif %}
+{% endblock %}

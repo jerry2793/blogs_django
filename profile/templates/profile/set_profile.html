@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block csslink %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="form-wrapper">
+    {% if form.errors%}
+    {{form.errors}}
+    {% endif %}
+    <form enctype="multipart/form-data" action="" method="POST">
+        {% csrf_token %}
+    {% for field in form %}
+    <label for="{{field.id}}">{{field.name | capfirst}}: </label>
+    {{field}}
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+</div>
+
+{% endblock %}
+
+
+{% block jslink %}
+
+{% endblock %}

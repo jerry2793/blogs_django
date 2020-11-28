@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Password Update</title>
+    <style>
+        /* css */
+    </style>
+</head>
+<body>
+    <h1>Update Password Here</h1>
+    <div class="msg">
+        <p>{{msg}}</p>
+    </div>
+    <form action="{% url 'update_pwd' %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <!-- {% for field in form %}
+        <div>
+        <label>{{field.name}}: </label>{{field}}
+        </div>
+        {% endfor %} -->
+        <input type="hidden" value="{{request.path}}" name="next">
+        <input type="submit" value="Update">
+    </form>
+    <a href="{% url 'login' %}">Login</a>
+</body>
+</html>

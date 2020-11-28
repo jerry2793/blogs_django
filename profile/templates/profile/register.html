@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <style>
+        body {
+            /* text-align: center; */
+            margin: 0;
+            padding:0;
+            background-color: azure;
+        }
+        .container, .container:hover {
+            position: absolute;
+            top: 10%;
+            left:20%;
+            width: 60%;
+            height: 85%;
+            background-color: white;
+            margin: auto;
+            margin-bottom: 10%;
+            padding: 5%;
+            text-align: center;
+            transition: 0.3s ease-out;
+        } .container:hover {
+            box-shadow: 10px 10px 8px #dedede;
+        }
+        .form-wrapper, .form-wrapper:hover {
+            margin: 5% 20%;
+            padding: 5%;
+            background-color: #ffd000;
+            border-radius: 10%;
+            transition: 0.3s ease-out;
+        } .form-wrapper:hover {
+            border-radius: 5%;
+        }
+        .input-wrapper {
+            margin: 5%;
+            border-bottom: 2px solid black;
+        }
+        .input-wrapper input, .input-wrapper input:focus, .input-wrapper input:active {
+            -webkit-appearance: none;
+            outline:none;
+            border: none;
+            background: transparent !important;
+            background-color: transparent !important;
+            /* border-bottom: 2px solid black; */
+        }.input-wrapper input:focus {
+            /* border: none; */
+            /* background-color:  #ffd000; */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-title">
+            <h1>Register</h1>
+        </div>
+        <div class="msg">
+            <p>{{msg}}</p>
+        </div>
+        <div class="form-wrapper">
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <!-- <p>Username: </p>{{form.username}}
+                <p>First Name: </p>{{form.first_name}}
+                <p>Last Name: </p>{{form.last_name}}
+                <p>Password: </p>{{form.password1}}
+                <p>Password(again): </p>{{form.password2}} -->
+                {% for field in form %}
+                <div class="input-wrapper">
+                    <label for="{{field.id}}">{{field.name | capfirst }}: </label>
+                    {{field}}
+                </div>
+                {% endfor %}
+                <!-- {{form}} -->
+                <input type="submit" name="login-submit" value="REGISTER" class="btn btn-primary btn-lg btn-block" />
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

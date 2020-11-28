@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'profile',
     'math2code',
     'blogs',
+    'forum',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/auth/login/'
+
+LOGIN_REDIRECT_URL = '/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -142,9 +146,11 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
-    os.path.join(BASE_DIR,'auth','static'),
+    os.path.join(BASE_DIR,'profile','static'),
     os.path.join(BASE_DIR,'math2code','static'),
     os.path.join(BASE_DIR,'blogs','static'),
+    os.path.join(BASE_DIR,'forum','static'),
+    os.path.join(BASE_DIR,'chat','static'),
     # os.path.join(BASE_DIR,'static'),
 ]
 
