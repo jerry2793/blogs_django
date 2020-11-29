@@ -8,38 +8,6 @@ from datetime import datetime
 
 
 # Create your models here.
-
-class Math2codeComments(models.Model):
-    user = models.ForeignKey(User,models.CASCADE)
-    # article = models.ForeignKey(Math2codeContent,models.CASCADE)
-
-    # reply_to_comment = models.BooleanField(default=False)
-    reply_to = models.CharField(max_length=1000)
-    # replies = models.ForeignKey(Math2codeCommentReplies,models.CASCADE)
-
-    comment = models.CharField(max_length=1000, blank=False)
-
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.comment
-
-
-class Math2codeCommentReplies(models.Model):
-    user = models.ForeignKey(User,models.CASCADE)
-    comment = models.ForeignKey(Math2codeComments,models.CASCADE)
-
-    # reply_to_comment = models.BooleanField
-    # reply_to = models.CharField(max_length=100000)
-    reply = models.CharField(max_length=500,blank=False)
-
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.reply
-
-
-
 class Math2codeContent(models.Model):
     title = models.CharField(max_length=100,blank=False)
     header_image = models.ImageField(upload_to="math2code/images/")
@@ -63,6 +31,34 @@ class Math2codeContent(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Math2codeComments(models.Model):
+    user = models.ForeignKey(User,models.CASCADE)
+    article = models.ForeignKey(Math2codeContent,models.CASCADE,default=0)
+    comment = models.CharField(max_length=1000, blank=False)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.comment
+
+
+class Math2codeCommentReplies(models.Model):
+    user = models.ForeignKey(User,models.CASCADE)
+    comment = models.ForeignKey(Math2codeComments,models.CASCADE)
+
+    # reply_to_comment = models.BooleanField
+    # reply_to = models.CharField(max_length=100000)
+    reply = models.CharField(max_length=500,blank=False)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reply
+
+
+
 
 
 # class Math2codeArticle(models.Model):

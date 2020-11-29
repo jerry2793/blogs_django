@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from django.views import View
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 from .models import Math2codeContent,Math2codeComments
@@ -26,47 +27,69 @@ class IndexView(View):
     def post(self,*args,**kwargs):
         pass
 
-
+@method_decorator(login_required,name='post')
 class ArticlesView(View):
-    def my_init(self,*args,**kwargs):
-        self.templates = {
-            'article':'math2code/article.html'
-        }
-        self.pk = self.kwargs['pk']
+    # def my_init(self,*args,**kwargs):
+    #     self.templates = {
+    #         'article':'math2code/article.html'
+    #     }
+    #     self.pk = self.kwargs['pk']
 
-        self.request.POST['user'] = self.request.user
 
-        self.CommentForm = Math2codeCommentsForm(self.request.POST)
-        self.ReplyForm = Math2codeCommentRepliesForm(self.request.POST)
+    #     self.CommentForm = Math2codeCommentsForm(self.request.POST)
 
-        self.ctx = {
-            'article':Articles.objects.filter(id=self.pk),
-            'comments':Comments.objects.filter(reply_to=str(self.pk)),
-            'commentForm': self.CommentForm,
-            'replyForm': self.ReplyForm,
-        }
-        self.submitted_form = self.check_submitted_form(self.request.POST)
+    #     self.ctx = {
+    #         'article':Articles.objects.filter(id=self.pk),
+    #         'comments':Comments.objects.filter(reply_to=str(self.pk)),
+    #         'commentForm': self.CommentForm,
+    #         'replyForm': self.ReplyForm,
+    #     }
+    #     self.submitted_form = self.check_submitted_form(self.request.POST)
 
 
     def get(self,*args,**kwargs):
-        
-        return render(self.request,self.templates['article'],self.ctx)
+        pk = self.kwargs['pk']
+        CommentForm = Math2codeCommentsForm()
+        ReplyForm = Math2codeCommentRepliesForm()
+        ctx = {
+            'article':Articles.objects.get(id=pk),
+            'comments':Comments.objects.filter(article=pk),
+            'commentForm': CommentForm,
+            'replyForm': ReplyForm,
+        }
+        return render(self.request,'math2code/article.html',ctx)
 
 
-    @login_required()
     def post(self,*args,**kwargs):
-        if self.submitted_form.is_valid():
-            self.submitted_form.save()
+        pk = self.kwargs['pk']
+        CommentForm = Math2codeCommentsForm
+        ReplyForm = Math2codeCommentRepliesForm
+        # self.request.POST['user'] = self.request.user
+        postData = self.request.POST
+        submitted_form = self.check_submitted_form(postData)
+        ctx = {
+            'article':Articles.objects.get(id=pk),
+            'comments':Comments.objects.filter(article=pk),
+            'commentForm': CommentForm,
+            'replyForm': ReplyForm,
+        }
+        if submitted_form.is_valid():
+            submitted_form.save(commit=False)
+            submitted_form.user = self.request.user.id
+            submitted_form.save()
+            return render(self.request,'math2code/article.html',ctx)
         else:
-            return render(self.request,self.templates['article'],self.ctx)
+            return render(self.request,'math2code/article.html',ctx)
+
+
+
+
 
     def check_submitted_form(self,POST):
-        if POST['submit'] == 'comment-btn':
-            self.CommentForm['article'] = self.ctx['article']
-            return self.CommentForm
+        if POST['submit'] == 'Comment':
+            return Math2codeCommentsForm(POST)
         else:
-            self.ReplyForm['comment'] = POST['submit']
-            return self.ReplyForm
+            return Math2codeCommentRepliesForm(POST)
 
 
 

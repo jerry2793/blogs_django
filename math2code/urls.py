@@ -11,6 +11,7 @@ urlpatterns = [
     path('articles/<int:pk>/',ArticlesView.as_view(),name='math2code-articles'),
 
     path('articles_create/',ArticleCreateView.as_view(),name="math2code-create"),
+
     # path()
 ]
 

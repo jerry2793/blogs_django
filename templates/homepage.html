@@ -1,10 +1,17 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<p>Welcome to the Homepage! {{request.user}}! </p>
+<p>Welcome to the Homepage: {{request.user}}! </p>
 {% if request.user.profile %}
 <a href="{% url 'update_profile' pk=request.user.id %}">Update My Profile</a>
 {% else %}
 <a href="{% url 'create_profile' %}">Create Profile</a>
 {% endif %}
+
+<a href="{% url 'math2code-index' %}">
+    <h3>Look at my Newly Written Blogs: </h3>
+    <p>About how to turn boring Math problems into fun coding projects!</p>
+</a>
+
+
 {% endblock %}

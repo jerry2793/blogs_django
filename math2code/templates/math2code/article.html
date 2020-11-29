@@ -34,15 +34,28 @@ article: the article instance object w/ all the
 
 <div class="article-footer">
     <div class="article-author">
-        {% inlcude 'components/author-avatar.html' with author={{article.author}}%}
+        {% include "./components/author-avatar.html" with author=article.author %}
     </div>
 </div>
 
 <div class="article-comments">
     {% for comment in comments %}
     <!-- main comment towards the article -->
-    {% include 'components/comment-widget.html' with comment={{comment}} %}
+    <!-- {{comment}} -->
+    {% include "components/comment-widget.html" 
+    with comment=comment replyForm=replyForm %}
     {% endfor %}
+    <!-- {{request.user.id}} -->
+    <form action="." method="POST">
+        {% csrf_token %}
+        {{commentForm}}
+        <input type="hidden" value="{{article.id}}" name="article">
+        <input type="hidden" name="user" value="{{request.user.id}}">
+        <input type="submit" value="Comment" name="submit">
+        {% if form.errors %}
+        {{form.errors}}
+        {% endif %}
+    </form>
 </div>
 
 

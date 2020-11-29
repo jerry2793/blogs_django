@@ -32,9 +32,11 @@
         </div>
 
         <div class="comment-reply-form" id="reply-reply">
-        {% include 'components/reply-form.html' with 
-        pk={{comment.id}}
-        form={{form}} %}
+        {% 
+            include 'components/reply-form.html' with 
+            pk={{comment.id}}
+            form={{replyForm}} 
+        %}
         </div>
 
         {% endfor %}

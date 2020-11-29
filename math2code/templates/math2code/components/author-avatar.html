@@ -34,9 +34,8 @@
     }
 </style>
 
-<a href="{% url 'author-page' pk={{author.id}} %}">
     <div class="author-widget">
-        <img src="{{author.profile_pic}}" alt="">
+        <img src="{{author.profile_pic}}" alt="Profile Picture of Author not found">
         <h3>{{author.first_name}} {{author.last_name}}</h3>
         {% if author.email %}
         <h5>{{author.email}}</h5>
@@ -44,9 +43,11 @@
         <!-- placeholder -->
         {% endif %}
         <p>{{author.signiture}}</p>
-        <strong>Show More</strong>
+        <a href="{% url 'author-page' pk='author.id' %}">
+            <strong>Show More</strong>
+        </a>
     </div>
-</a>
+
 
 <script>
     // write js of dynamic adjusting here, all browser support

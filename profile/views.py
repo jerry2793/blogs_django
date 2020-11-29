@@ -63,14 +63,14 @@ class LoginView(View):
 class RegisterView(View):
     def get(self,*args,**kwargs):
         ctx = {
-            'form':UserCreationForm()
+            'form':RegisterForm()
         }
         return render(self.request,'profile/register.html',ctx)
 
     def post(self,*args,**kwargs):
         ctx = {
             'msg':'',
-            'form':UserCreationForm(self.request.POST)
+            'form':RegisterForm(self.request.POST)
         }
         registerForm = ctx['form']
         if registerForm.is_valid():
@@ -130,6 +130,12 @@ class UpdateProfileView(UpdateView):
     def get_success_url(self):
         return reverse('home')
 
+
+def UserProfile(request,*args,**kwargs):
+    pk = kwargs['pk']
+    return render(request,'profile/profile.html',{
+        'user': Profile.objects.get(user=pk)
+    })
 
 
 class UpdatePwdView(View):

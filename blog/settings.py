@@ -89,6 +89,8 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATES[0]["OPTIONS"]["debug"] = True
+
 WSGI_APPLICATION = 'blog.wsgi.application'
 
 
