@@ -34,6 +34,7 @@ article: the article instance object w/ all the
 
 <div class="article-footer">
     <div class="article-author">
+        <!-- <p>{{article.author}}</p> -->
         {% include "./components/author-avatar.html" with author=article.author %}
     </div>
 </div>
@@ -42,11 +43,10 @@ article: the article instance object w/ all the
     {% for comment in comments %}
     <!-- main comment towards the article -->
     <!-- {{comment}} -->
-    {% include "components/comment-widget.html" 
-    with comment=comment replyForm=replyForm %}
+    {% include "./components/comment-widget.html" with replies=replies comment=comment replyForm=replyForm %}
     {% endfor %}
     <!-- {{request.user.id}} -->
-    <form action="." method="POST">
+    <form action="{% url 'postComment' %}" method="POST">
         {% csrf_token %}
         {{commentForm}}
         <input type="hidden" value="{{article.id}}" name="article">

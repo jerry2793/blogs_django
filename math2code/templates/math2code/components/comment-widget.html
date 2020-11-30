@@ -15,36 +15,46 @@
         transition: 0.3s ease-out;
     } .article-comment-widget:hover {
         cursor: pointer;
-        filter: brightness(0.7);
+        filter: brightness(0.9);
     }
 </style>
 
 <div class="article-comment-widget">
     <img src="{{comment.user.profile_pic}}" alt="">
-    <h5>{{comment.user.first_name}} {{comment.user.last_name}}</h5>
+    <h5>{{comment.user.user.first_name}} {{comment.user.user.last_name}}</h5>
     <p>{{comment.comment}}</p>
     <!-- check if there are replies to the comment-towards-article -->
-    {% if comment.replies %}
+    {% if replies %}
 
-        {% for reply in comment.replies %}
+        {% for reply in replies %}
         <div class="article-comment-replies">
-            
+            {{reply.reply}}
         </div>
 
-        <div class="comment-reply-form" id="reply-reply">
-        {% 
-            include 'components/reply-form.html' with 
-            pk={{comment.id}}
-            form={{replyForm}} 
-        %}
-        </div>
+        
 
         {% endfor %}
+        <div class="comment-reply-form" id="reply-reply">
+            <form action="{% url 'postReply' %}" method="POST">
+                {% csrf_token %}
+                {{replyForm}}
+                <input type="hidden" value="{{comment.id}}" name="comment">
+                <input type="hidden" value="{{article.id}}" name="article">
+                <input type="submit" value="submit" name="submit">
+            </form>
+        </div>
     
     {% else %}
 
         <div class="comment-reply-form" id="first-reply">
-
+            <div class="comment-reply-form" id="reply-reply">
+                <form action="{% url 'postReply' %}">
+                    {{replyForm}}
+                    <input type="hidden" value="{{comment.id}}" name="comment">
+                    <input type="hidden" value="{{article.id}}" name="article">
+                    <input type="submit" value="submit" name="submit">
+                </form>
+            </div>
         </div>
 
     {% endif %}

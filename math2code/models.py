@@ -2,7 +2,8 @@ from django.db import models
 
 from PIL import Image
 
-from profile.models import Profile as User
+from profile.models import Profile
+from django.contrib.auth.models import User
 
 from datetime import datetime
 
@@ -12,7 +13,7 @@ class Math2codeContent(models.Model):
     title = models.CharField(max_length=100,blank=False)
     header_image = models.ImageField(upload_to="math2code/images/")
     description = models.CharField(max_length=250,blank=True)
-    author = models.ForeignKey(User,models.CASCADE,default=None,blank=True)
+    author = models.ForeignKey(Profile,models.DO_NOTHING,db_column='user',null=True,blank=True)
 
     problem = models.TextField(blank=False)
     explaination_problem = models.TextField(blank=False)
@@ -34,8 +35,8 @@ class Math2codeContent(models.Model):
 
 
 class Math2codeComments(models.Model):
-    user = models.ForeignKey(User,models.CASCADE)
-    article = models.ForeignKey(Math2codeContent,models.CASCADE,default=0)
+    user = models.ForeignKey(Profile,models.DO_NOTHING,db_column='user',null=True,blank=True)
+    article = models.ForeignKey(Math2codeContent,models.DO_NOTHING,default=0)
     comment = models.CharField(max_length=1000, blank=False)
 
     date_added = models.DateTimeField(auto_now_add=True)
@@ -45,8 +46,9 @@ class Math2codeComments(models.Model):
 
 
 class Math2codeCommentReplies(models.Model):
-    user = models.ForeignKey(User,models.CASCADE)
-    comment = models.ForeignKey(Math2codeComments,models.CASCADE)
+    user = models.ForeignKey(Profile,models.DO_NOTHING,default=1)
+    comment = models.ForeignKey(Math2codeComments,models.DO_NOTHING,default=1)
+    article = models.ForeignKey(Math2codeContent,models.DO_NOTHING,default=1)
 
     # reply_to_comment = models.BooleanField
     # reply_to = models.CharField(max_length=100000)

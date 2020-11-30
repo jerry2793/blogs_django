@@ -12,6 +12,10 @@ urlpatterns = [
 
     path('articles_create/',ArticleCreateView.as_view(),name="math2code-create"),
 
+    path('api/post-comment',handleCommentPost,name='postComment'),
+    path('api/post-comment-reply',handleReplyPost,name='postReply'),
+
+
     # path()
 ]
 

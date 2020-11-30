@@ -8,7 +8,7 @@ from .models import Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = 'user','profile_pic','signiture','theme'
+        fields = 'profile_pic','signiture','theme'
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username")

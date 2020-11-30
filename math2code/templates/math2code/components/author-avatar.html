@@ -43,7 +43,8 @@
         <!-- placeholder -->
         {% endif %}
         <p>{{author.signiture}}</p>
-        <a href="{% url 'author-page' pk='author.id' %}">
+        <p>{{author.user.id}}</p>
+        <a href="{% url 'author-page' author.user.id %}">
             <strong>Show More</strong>
         </a>
     </div>
